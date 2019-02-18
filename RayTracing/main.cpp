@@ -19,10 +19,21 @@ Fichier main.cpp
 using namespace std;
 
 
+//fonction permettant de trouver un point aleatoire dans une sphere unitaire
+vec3 random_in_unit_sphere() {
+	vec3 p;
+	do {
+		p = 2.0*vec3(double(rand()) / RAND_MAX, double(rand()) / RAND_MAX, double(rand()) / RAND_MAX) - vec3(1, 1, 1);
+	} while (p.squared_length() >= 1.0);
+	return p;
+}
+
+
 vec3 color(const ray& r, hitable *world){
 	hit_record rec;
 	if(world->hit(r, 0.0, FLT_MAX, rec)){ //FLT_MAX au lieu de FLOATMAX sous windows
-		return 0.5*vec3(rec.normal.x()+1, rec.normal.y()+1, rec.normal.z()+1);
+		vec3 target = rec.p + rec.normal + random_in_unit_sphere();
+		return 0.5*color( ray(rec.p, target-rec.p), world );
 	}
 	else{
 		vec3 unit_direction = unit_vector(r.direction());
