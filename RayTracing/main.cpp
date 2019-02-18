@@ -31,7 +31,8 @@ vec3 random_in_unit_sphere() {
 
 vec3 color(const ray& r, hitable *world){
 	hit_record rec;
-	if(world->hit(r, 0.0, FLT_MAX, rec)){ //FLT_MAX au lieu de FLOATMAX sous windows
+	//hit(..., 0.001, ...) pour eliminer les frappes trop proches de 0 qui induisent possibles bugs
+	if(world->hit(r, 0.001, FLT_MAX, rec)){ //FLT_MAX au lieu de FLOATMAX sous windows
 		vec3 target = rec.p + rec.normal + random_in_unit_sphere();
 		return 0.5*color( ray(rec.p, target-rec.p), world );
 	}
@@ -74,6 +75,8 @@ int main() {
 			}
 			
 			col /= float(ns);
+			//correction gamma, ici gamma 2
+			col = vec3( sqrt(col[0]), sqrt(col[1]), sqrt(col[2]) );
 
 			int ir = int(255.99*col[0]);
 			int ig = int(255.99*col[1]);
