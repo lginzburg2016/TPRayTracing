@@ -50,6 +50,7 @@ int main() {
 	int ns = 100;
 	outputfile << "P3\n" << nx << " " << ny << "\n255\n";
 
+	
 	//creation liste d objets
 	hitable *list[5];
 	list[0] = new sphere(vec3(0,0,-1), 0.5, new lambertian(vec3(0.8, 0.3, 0.3)));
@@ -58,8 +59,10 @@ int main() {
 	list[3] = new sphere(vec3(-1, 0, -1), 0.5, new dielectric(1.5));
 	list[4] = new sphere(vec3(-1, 0, -1), -0.45, new dielectric(1.5));
 	hitable *world = new hitable_list(list,5);
+	
 
-	camera cam;
+	//champ de vision 45 degres
+	camera cam(vec3(-2,2,1), vec3(0,0,-1), vec3(0,2,0), 45, float(nx)/float(ny) );
 
 	for (int j = ny-1; j >=0 ; j--){
 		for (int i = 0; i < nx; i++){
