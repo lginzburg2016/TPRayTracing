@@ -97,10 +97,10 @@ int main() {
 	world = random_scene();
 
 	//prise en compte ouverture camera
-	vec3 lookfrom(3, 3, 2);
-	vec3 lookat(0, 0, -1);
-	float dist_to_focus = (lookfrom - lookat).length();
-	float aperture = 0.5;
+	vec3 lookfrom(13, 2, 3);
+	vec3 lookat(0, 0, 0);
+	float dist_to_focus = 10.0;
+	float aperture = 0.1;
 
 	//champ de vision 20 degres
 	camera cam(lookfrom, lookat, vec3(0,1,0), 20, float(nx)/float(ny), aperture, dist_to_focus );
