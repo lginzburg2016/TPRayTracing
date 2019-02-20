@@ -60,9 +60,14 @@ int main() {
 	list[4] = new sphere(vec3(-1, 0, -1), -0.45, new dielectric(1.5));
 	hitable *world = new hitable_list(list,5);
 	
+	//prise en compte ouverture camera
+	vec3 lookfrom(3, 3, 2);
+	vec3 lookat(0, 0, -1);
+	float dist_to_focus = (lookfrom - lookat).length();
+	float aperture = 0.5;
 
-	//champ de vision 45 degres
-	camera cam(vec3(-2,2,1), vec3(0,0,-1), vec3(0,2,0), 45, float(nx)/float(ny) );
+	//champ de vision 20 degres
+	camera cam(lookfrom, lookat, vec3(0,1,0), 20, float(nx)/float(ny), aperture, dist_to_focus );
 
 	for (int j = ny-1; j >=0 ; j--){
 		for (int i = 0; i < nx; i++){
